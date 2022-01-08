@@ -2,13 +2,25 @@ const router = require('express').Router();
 const store = require ("../db/store");
 
 router.get("/notes",(req,res)=>{
-    res.sendFile(path.join(__dirname,"../public/notes.html"))  
-  })
-router.post("/notes",(req,res)=>{
-    res.sendFile(path.join(__dirname,"../public/notes.html"))  
-  }
-router.delete("/notes",(req,res)=>{
-    res.removeFile(path.join(__dirname,"../public/notes.html"))  
+    store
+    .get()
+    .then((notes)=>{return res.json(notes)})
+    .catch((error)=> res.status(500).json(error))
   })
 
-modules.export = router
+  router.post("/notes",(req,res)=>{
+    store
+    .add(req.body)
+    .then((notes)=>res.json(notes))
+    .catch((error)=> res.status(500).json(error))
+
+  })
+router.delete("/notes/:id",(req,res)=>{
+    store
+    .remove(req.params.id)
+    .then(()=> res.json({ok:true}))
+    .catch((error)=> res.status(500).json(error))
+
+  })
+
+module.exports = router

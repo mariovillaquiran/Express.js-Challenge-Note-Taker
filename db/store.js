@@ -1,6 +1,6 @@
 const util = require("util");
 const fs = require("fs");
-const uuidv4 = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 const readfileasync = util.promisify(fs.readFile);
 const writefileasync = util.promisify(fs.writeFile);
 class Store{
@@ -22,19 +22,21 @@ get(){
     return notesparsed
     })
 }
-add(){ 
+add(note){ 
     const {title,text} = note
-    if (!title || !text) { 
+    if (!title || !text) {
     throw new Error("Must include title and text")    
     }
-const newnote = {title,text,uuidv4()} 
+const newnote = {title,text,id: uuidv4()} 
 return this.get()
 .then((notes)=>[...notes,newnote])
 .then((updatednotes)=> this.write(updatednotes))
 .then(()=>newnote)
 }
-remove(){
-
+remove(id){
+return this.get()
+.then((notes)=> notes.filter((note)=>note.id !==id))
+.then((notesfiltered)=> this.write(notesfiltered))
 }
 
 }

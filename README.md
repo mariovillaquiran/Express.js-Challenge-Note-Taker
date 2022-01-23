@@ -41,6 +41,7 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 
 ## Mock-Up
 
+<img width="1339" alt="Screen Shot 2022-01-23 at 2 18 27 PM" src="https://user-images.githubusercontent.com/90975246/150694431-7b5f23e2-c69e-468f-92fa-39c3d06241f2.png">
 
 # Lincense
 
